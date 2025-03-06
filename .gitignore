@@ -1,0 +1,17 @@
+# Артефакты сборки
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+# Файлы конфигурации среды разработки
+*.suo
+*.user
+*.vcxproj.user
+*.csproj.user
+
+# Rider, VS Code, VS
+.idea/
+.vscode/
+.vs/
