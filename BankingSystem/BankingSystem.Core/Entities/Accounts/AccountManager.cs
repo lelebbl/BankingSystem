@@ -1,115 +1,86 @@
-﻿using System;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand;
+
 
 namespace BankingSystem.BankingSystem.Core.Entities.Accounts
 {
     public static class AccountManager
     {
-        public static void OpenAccount(List<Account> accounts)
+        public static void OpenAccount(List<Account> accounts, TransactionInvoker invoker)
         {
-            string accountNumber = Guid.NewGuid().ToString();
-            accounts.Add(new CheckingAccount(accountNumber, 0));
-            Console.WriteLine($"Счет открыт. Номер счета: {accountNumber}");
+            var command = new OpenAccountCommand(accounts);
+            invoker.ExecuteCommand(command);
         }
 
-        public static void DepositToAccount(List<Account> accounts)
+        public static void DepositToAccount(List<Account> accounts, TransactionInvoker invoker)
         {
             if (accounts.Count == 0)
             {
                 Console.WriteLine("У вас нет открытых счетов. Сначала откройте счет.");
-                OpenAccount(accounts);
+                OpenAccount(accounts, invoker);
                 return;
             }
 
             Console.Write("Введите номер счета: ");
             string accountNumber = Console.ReadLine();
 
-            Account account = Account.FindAccount(accounts, accountNumber);
-            if (account != null)
+            Console.Write("Введите сумму для пополнения: ");
+            decimal amount;
+            if (decimal.TryParse(Console.ReadLine(), out amount))
             {
-                Console.Write("Введите сумму для пополнения: ");
-                decimal amount;
-                if (decimal.TryParse(Console.ReadLine(), out amount))
-                {
-                    account.Deposit(amount);
-                    Console.WriteLine($"Счет пополнен на {amount}. Текущий баланс: {account.Balance}");
-                }
-                else
-                {
-                    Console.WriteLine("Некорректная сумма.");
-                }
+                var command = new DepositCommand(accounts, accountNumber, amount);
+                invoker.ExecuteCommand(command);
             }
             else
             {
-                Console.WriteLine("Счет не найден.");
+                Console.WriteLine("Некорректная сумма.");
             }
         }
 
-        public static void WithdrawFromAccount(List<Account> accounts)
+        public static void WithdrawFromAccount(List<Account> accounts, TransactionInvoker invoker)
         {
             if (accounts.Count == 0)
             {
                 Console.WriteLine("У вас нет открытых счетов. Сначала откройте счет.");
-                OpenAccount(accounts);
+                OpenAccount(accounts, invoker);
                 return;
             }
 
             Console.Write("Введите номер счета: ");
             string accountNumber = Console.ReadLine();
 
-            Account account = Account.FindAccount(accounts, accountNumber);
-            if (account != null)
+            Console.Write("Введите сумму для снятия: ");
+            decimal amount;
+            if (decimal.TryParse(Console.ReadLine(), out amount))
             {
-                Console.Write("Введите сумму для снятия: ");
-                decimal amount;
-                if (decimal.TryParse(Console.ReadLine(), out amount))
-                {
-                    if (account.Balance >= amount)
-                    {
-                        account.Withdraw(amount);
-                        Console.WriteLine($"Снято {amount}. Текущий баланс: {account.Balance}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Недостаточно средств.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Некорректная сумма.");
-                }
+                var command = new WithdrawCommand(accounts, accountNumber, amount);
+                invoker.ExecuteCommand(command);
             }
             else
             {
-                Console.WriteLine("Счет не найден.");
+                Console.WriteLine("Некорректная сумма.");
             }
         }
 
-        public static void CloseAccount(List<Account> accounts)
+        public static void CloseAccount(List<Account> accounts, TransactionInvoker invoker)
         {
             if (accounts.Count == 0)
             {
                 Console.WriteLine("У вас нет открытых счетов. Сначала откройте счет.");
-                OpenAccount(accounts);
+                OpenAccount(accounts, invoker);
                 return;
             }
 
             Console.Write("Введите номер счета: ");
             string accountNumber = Console.ReadLine();
 
-            Account account = Account.FindAccount(accounts, accountNumber);
-            if (account != null)
-            {
-                accounts.Remove(account);
-                Console.WriteLine("Счет закрыт.");
-            }
-            else
-            {
-                Console.WriteLine("Счет не найден.");
-            }
+            var command = new CloseAccountCommand(accounts, accountNumber);
+            invoker.ExecuteCommand(command);
         }
     }
 }

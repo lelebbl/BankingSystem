@@ -1,4 +1,6 @@
-﻿using BankingSystem.BankingSystem.Core.Entities.Enterprises;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities.Enterprises;
+using BankingSystem.BankingSystem.Core.Entities.Users;
 using BankingSystem.BankingSystem.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -40,17 +42,24 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
                 return false;
             }
 
+            // Create instances of the required services
+            var transactionInvoker = new TransactionInvoker();
+            var enterpriseService = new EnterpriseService();
+            var specialist = new Specialist("Specialist Name", "Passport Number", "ID Number", "Phone", "Email", "Password", transactionInvoker);
+
+            var specialistActions = new SpecialistActions(enterpriseService, specialist, transactionInvoker);
+
             foreach (var employeeName in EmployeeNames)
             {
                 var client = Program.selectedBank.Clients.FirstOrDefault(c => c.FullName == employeeName);
                 if (client == null)
                 {
                     Console.WriteLine($"Сотрудник {employeeName} не найден. Пожалуйста, зарегистрируйте сотрудника.");
-                    client = new SpecialistActions(null, null).RegisterNewClient(employeeName);
+                    client = specialistActions.RegisterNewClient(employeeName);
                 }
 
                 var existingAccount = client.accounts.FirstOrDefault();
-                string accountNumber = existingAccount?.AccountNumber ?? new SpecialistActions(null, null).OpenEmployeeAccount(employeeName, client);
+                string accountNumber = existingAccount?.AccountNumber ?? specialistActions.OpenEmployeeAccount(employeeName, client);
 
                 Console.Write("Введите сумму перевода: ");
                 if (decimal.TryParse(Console.ReadLine(), out decimal amount))

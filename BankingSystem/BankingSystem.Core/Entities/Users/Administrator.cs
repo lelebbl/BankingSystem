@@ -15,10 +15,10 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         private TransactionInvoker _transactionInvoker;
         private LogDatabase logDb;
 
-        public Administrator(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
+        public Administrator(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Administrator)
         {
-            _transactionInvoker = new TransactionInvoker();
+            _transactionInvoker = transactionInvoker;
             logDb = new LogDatabase();
         }
 

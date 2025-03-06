@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Entities.Banks;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities.Banks;
 using BankingSystem.BankingSystem.Core.Entities.Enterprises;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
@@ -17,11 +18,11 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         internal ConcreteEnterprise enterprise;
         private SpecialistActions specialistActions;
 
-        public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
+        public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Specialist)
         {
             enterpriseService = new EnterpriseService();
-            specialistActions = new SpecialistActions(enterpriseService, this);
+            specialistActions = new SpecialistActions(enterpriseService, this, transactionInvoker);
         }
 
         public override void PerformRoleActions()

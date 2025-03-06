@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Entities;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities;
 using BankingSystem.BankingSystem.Core.Entities.Banks;
 using BankingSystem.BankingSystem.Core.Entities.Users;
 using BankingSystem.BankingSystem.Core.Enums;
@@ -7,7 +8,8 @@ using BankingSystem.BankingSystem.Data;
 
 class Program
 {
-    static AuthService authService = new AuthService();
+    static TransactionInvoker transactionInvoker = new TransactionInvoker();
+    static AuthService authService = new AuthService(transactionInvoker);
     static BankService bankService = new BankService();
     static LogDatabase logDb = new LogDatabase();
     public static Bank selectedBank;

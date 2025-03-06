@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Data;
@@ -15,9 +16,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         public List<Account> accounts = new List<Account>();
         public List<Application> applications { get; } = new List<Application>();
         public List<Transaction> transactions { get; } = new List<Transaction>();
+        private TransactionInvoker _transactionInvoker;
 
-        public Client(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
-            : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Client) { }
+        public Client(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
+            : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Client) 
+        {
+            _transactionInvoker = transactionInvoker;
+        }
 
         public override void PerformRoleActions()
         {
@@ -40,21 +45,21 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             switch (choice)
             {
                 case "1":
-                    AccountManager.OpenAccount(accounts);
+                    AccountManager.OpenAccount(accounts, _transactionInvoker);
                     logDb.AddLog(FullName, "Открыл новый счет");
                     break;
                 case "2":
                     Account.DisplayAccounts(this);
                     break;
                 case "3":
-                    AccountManager.DepositToAccount(accounts);
+                    AccountManager.DepositToAccount(accounts, _transactionInvoker);
                     logDb.AddLog(FullName, "Пополнил счет");
                     break;
                 case "4":
-                    AccountManager.WithdrawFromAccount(accounts);
+                    AccountManager.WithdrawFromAccount(accounts, _transactionInvoker);
                     break;
                 case "5":
-                    AccountManager.CloseAccount(accounts);
+                    AccountManager.CloseAccount(accounts, _transactionInvoker);
                     break;
                 case "6":
                     Loan.CreateLoanApplication(this);
@@ -63,10 +68,10 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     Installment.CreateInstallmentApplication(this);
                     break;
                 case "8":
-                    DepositAccount.CreateDeposit(this);
+                    DepositAccount.CreateDeposit(this, _transactionInvoker);
                     break;
                 case "9":
-                    Transaction.CreateTransaction(this);
+                    Transaction.CreateTransaction(this, _transactionInvoker);
                     logDb.AddLog(FullName, "Перевел средства");
                     break;
                 case "0":

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Core.Commands;
 
 namespace BankingSystem.BankingSystem.Core.Services
 {
@@ -15,11 +16,13 @@ namespace BankingSystem.BankingSystem.Core.Services
     {
         private EnterpriseService enterpriseService;
         private Specialist specialist;
+        private TransactionInvoker transactionInvoker;
 
-        public SpecialistActions(EnterpriseService enterpriseService, Specialist specialist)
+        public SpecialistActions(EnterpriseService enterpriseService, Specialist specialist, TransactionInvoker transactionInvoker)
         {
             this.enterpriseService = enterpriseService;
             this.specialist = specialist;
+            this.transactionInvoker = transactionInvoker;
         }
 
         public bool CheckIfEnterpriseExists()
@@ -107,7 +110,7 @@ namespace BankingSystem.BankingSystem.Core.Services
             Console.Write("Введите пароль для сотрудника: ");
             string password = Console.ReadLine();
 
-            Client newClient = new Client(employeeName, passportNumber, idNumber, phone, email, password);
+            Client newClient = new Client(employeeName, passportNumber, idNumber, phone, email, password, transactionInvoker);
             Program.selectedBank.RegisterClient(newClient);
             return newClient;
         }

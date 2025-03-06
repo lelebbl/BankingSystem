@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
+﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using BankingSystem.BankingSystem.Core.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,12 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
             Date = DateTime.Now;
         }
 
-        public static void CreateTransaction(Client client)
+        public static void CreateTransaction(Client client, TransactionInvoker invoker)
         {
             if (client.accounts.Count == 0)
             {
                 Console.WriteLine("У вас нет открытых счетов. Сначала откройте счет.");
-                AccountManager.OpenAccount(client.accounts);
+                AccountManager.OpenAccount(client.accounts, invoker);
                 return;
             }
 
