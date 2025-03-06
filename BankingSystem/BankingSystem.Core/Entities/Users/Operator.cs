@@ -11,12 +11,12 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 {
     public class Operator : User
     {
-        private TransactionInvoker _transactionInvoker;
+        private CommandInvoker _transactionInvoker;
 
         public Operator(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Operator)
         {
-            _transactionInvoker = new TransactionInvoker();
+            _transactionInvoker = new CommandInvoker();
         }
 
         public override void PerformRoleActions()

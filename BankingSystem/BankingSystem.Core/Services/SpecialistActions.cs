@@ -16,9 +16,9 @@ namespace BankingSystem.BankingSystem.Core.Services
     {
         private EnterpriseService enterpriseService;
         private Specialist specialist;
-        private TransactionInvoker transactionInvoker;
+        private CommandInvoker transactionInvoker;
 
-        public SpecialistActions(EnterpriseService enterpriseService, Specialist specialist, TransactionInvoker transactionInvoker)
+        public SpecialistActions(EnterpriseService enterpriseService, Specialist specialist, CommandInvoker transactionInvoker)
         {
             this.enterpriseService = enterpriseService;
             this.specialist = specialist;

@@ -18,7 +18,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         internal ConcreteEnterprise enterprise;
         private SpecialistActions specialistActions;
 
-        public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
+        public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Specialist)
         {
             enterpriseService = new EnterpriseService();

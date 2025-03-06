@@ -11,13 +11,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Accounts
 {
     public static class AccountManager
     {
-        public static void OpenAccount(List<Account> accounts, TransactionInvoker invoker)
+        public static void OpenAccount(List<Account> accounts, CommandInvoker invoker)
         {
             var command = new OpenAccountCommand(accounts);
             invoker.ExecuteCommand(command);
         }
 
-        public static void DepositToAccount(List<Account> accounts, TransactionInvoker invoker)
+        public static void DepositToAccount(List<Account> accounts, CommandInvoker invoker)
         {
             if (accounts.Count == 0)
             {
@@ -42,7 +42,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Accounts
             }
         }
 
-        public static void WithdrawFromAccount(List<Account> accounts, TransactionInvoker invoker)
+        public static void WithdrawFromAccount(List<Account> accounts, CommandInvoker invoker)
         {
             if (accounts.Count == 0)
             {
@@ -67,7 +67,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Accounts
             }
         }
 
-        public static void CloseAccount(List<Account> accounts, TransactionInvoker invoker)
+        public static void CloseAccount(List<Account> accounts, CommandInvoker invoker)
         {
             if (accounts.Count == 0)
             {

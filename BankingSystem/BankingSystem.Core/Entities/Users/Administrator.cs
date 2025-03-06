@@ -12,10 +12,10 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 {
     public class Administrator : User
     {
-        private TransactionInvoker _transactionInvoker;
+        private CommandInvoker _transactionInvoker;
         private LogDatabase logDb;
 
-        public Administrator(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
+        public Administrator(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Administrator)
         {
             _transactionInvoker = transactionInvoker;
@@ -26,6 +26,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         {
             Console.WriteLine("1 - Просмотр всех логов действий");
             Console.WriteLine("2 - Отмена всех действий пользователей");
+            Console.WriteLine("3 - Отмена последнего действия");
+            Console.WriteLine("4 - Отмена выбранного действия");
             Console.WriteLine("0 - Выйти");
         }
 
@@ -39,7 +41,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     break;
                 case "2":
                     _transactionInvoker.UndoAllCommands();
-                    Console.WriteLine("Все действия пользователей отменены.");
+                    break;
+                case "3":
+                    _transactionInvoker.UndoLastCommand();
+                    Console.WriteLine("Последнее действие отменено.");
+                    break;
+                case "4":
+                    ShowCommandHistoryAndUndo();
                     break;
                 case "0":
                     // Exit
@@ -48,6 +56,36 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     Console.WriteLine("Некорректный ввод.");
                     break;
             }
-        } 
+        }
+
+        private void ShowCommandHistoryAndUndo()
+        {
+            var history = _transactionInvoker.GetCommandHistory();
+            if (history.Count == 0)
+            {
+                Console.WriteLine("Нет выполненных команд.");
+                return;
+            }
+
+            Console.WriteLine("Выполненные команды:");
+            for (int i = 0; i < history.Count; i++)
+            {
+                Console.WriteLine($"{i} - {history[i].GetType().Name}");
+            }
+
+            Console.Write("Введите индекс команды для отмены: ");
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                _transactionInvoker.UndoCommandAtIndex(index);
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод.");
+            }
+        }
+
+
+
     }
 }
+

@@ -13,9 +13,9 @@ namespace BankingSystem.BankingSystem.Core.Services
     public class AuthService
     {
         private readonly List<User> _users = new List<User>();
-        private readonly TransactionInvoker _transactionInvoker;
+        private readonly CommandInvoker _transactionInvoker;
 
-        public AuthService(TransactionInvoker transactionInvoker)
+        public AuthService(CommandInvoker transactionInvoker)
         {
             _transactionInvoker = transactionInvoker;
 

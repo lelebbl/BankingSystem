@@ -13,13 +13,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
     public class Manager : User
     {
         private readonly AuthService _authService;
-        private TransactionInvoker _transactionInvoker;
+        private CommandInvoker _transactionInvoker;
 
         public Manager(string fullName, string passportNumber, string idNumber, string phone, string email, string password, AuthService authService)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Manager)
         {
             _authService = authService;
-            _transactionInvoker = new TransactionInvoker();
+            _transactionInvoker = new CommandInvoker();
         }
 
         public override void PerformRoleActions()

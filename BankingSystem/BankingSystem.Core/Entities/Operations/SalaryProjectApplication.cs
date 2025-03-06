@@ -43,7 +43,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
             }
 
             // Create instances of the required services
-            var transactionInvoker = new TransactionInvoker();
+            var transactionInvoker = new CommandInvoker();
             var enterpriseService = new EnterpriseService();
             var specialist = new Specialist("Specialist Name", "Passport Number", "ID Number", "Phone", "Email", "Password", transactionInvoker);
 

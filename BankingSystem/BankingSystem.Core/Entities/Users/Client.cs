@@ -1,4 +1,6 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand;
+using BankingSystem.BankingSystem.Core.Commands.OperationsCommand;
 using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Enums;
@@ -16,9 +18,9 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         public List<Account> accounts = new List<Account>();
         public List<Application> applications { get; } = new List<Application>();
         public List<Transaction> transactions { get; } = new List<Transaction>();
-        private TransactionInvoker _transactionInvoker;
+        public CommandInvoker _transactionInvoker { get; private set; }
 
-        public Client(string fullName, string passportNumber, string idNumber, string phone, string email, string password, TransactionInvoker transactionInvoker)
+        public Client(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Client) 
         {
             _transactionInvoker = transactionInvoker;
@@ -62,16 +64,20 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     AccountManager.CloseAccount(accounts, _transactionInvoker);
                     break;
                 case "6":
-                    Loan.CreateLoanApplication(this);
+                    var loanApplicationCommand = new LoanApplicationCommand(this, applications);
+                    _transactionInvoker.ExecuteCommand(loanApplicationCommand);
                     break;
                 case "7":
-                    Installment.CreateInstallmentApplication(this);
+                    var installmentApplicationCommand = new InstallmentApplicationCommand(this, applications);
+                    _transactionInvoker.ExecuteCommand(installmentApplicationCommand);
                     break;
                 case "8":
-                    DepositAccount.CreateDeposit(this, _transactionInvoker);
+                    var depositAccountCommand = new DepositAccountCommand(this, accounts);
+                    _transactionInvoker.ExecuteCommand(depositAccountCommand);
                     break;
                 case "9":
-                    Transaction.CreateTransaction(this, _transactionInvoker);
+                    var transactionCommand = new TransactionCommand(this);
+                    _transactionInvoker.ExecuteCommand(transactionCommand);
                     logDb.AddLog(FullName, "Перевел средства");
                     break;
                 case "0":

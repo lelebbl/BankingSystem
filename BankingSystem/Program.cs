@@ -8,7 +8,7 @@ using BankingSystem.BankingSystem.Data;
 
 class Program
 {
-    static TransactionInvoker transactionInvoker = new TransactionInvoker();
+    static CommandInvoker transactionInvoker = new CommandInvoker();
     static AuthService authService = new AuthService(transactionInvoker);
     static BankService bankService = new BankService();
     static LogDatabase logDb = new LogDatabase();
@@ -152,7 +152,7 @@ class Program
             Console.Write("Выберите действие: ");
             string choice = Console.ReadLine();
 
-            if (choice == "0" || (user.Role == UserRole.Administrator && choice == "3"))
+            if (choice == "0")
             {
                 Console.WriteLine("Возврат в главное меню...");
                 ShowMainMenu();
