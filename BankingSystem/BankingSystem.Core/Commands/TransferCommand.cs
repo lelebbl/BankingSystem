@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.BankingSystem.Core.Commands
 {
-    public class TransferCommand : ITransactionCommand
+    public class TransferCommand : ICommand
     {
         private readonly Account _fromAccount;
         private readonly Account _toAccount;

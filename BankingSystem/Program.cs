@@ -3,17 +3,20 @@ using BankingSystem.BankingSystem.Core.Entities.Banks;
 using BankingSystem.BankingSystem.Core.Entities.Users;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
+using BankingSystem.BankingSystem.Data;
 
 class Program
 {
     static AuthService authService = new AuthService();
     static BankService bankService = new BankService();
+    static LogDatabase logDb = new LogDatabase();
     public static Bank selectedBank;
     public static User currentUser;
 
 
     static void Main()
     {
+        logDb.AddLog("Система", "Запуск программы");
         while (true)
         {
             SelectBank();
@@ -34,6 +37,7 @@ class Program
             bankIndex > 0 && bankIndex <= bankService.Banks.Count)
         {
             selectedBank = bankService.Banks[bankIndex - 1];
+            logDb.AddLog("Система", $"Выбран банк: {selectedBank.Name}");
             ShowMainMenu();
         }
         else
@@ -57,7 +61,10 @@ class Program
             case "1": Login(); break;
             case "2": Register(); break;
             case "3": SelectBank(); break; 
-            case "4": Environment.Exit(0); break;
+            case "4":
+                logDb.AddLog("Система", "Выход из программы");
+                Environment.Exit(0);
+                break;
             default: Console.WriteLine("Некорректный ввод."); break;
         }
     }
@@ -77,6 +84,7 @@ class Program
                 Console.WriteLine("Ваш аккаунт еще не одобрен менеджером.");
                 return;
             }
+            logDb.AddLog(user.FullName, $"Вход в систему (роль: {user.Role})");
             Console.WriteLine($"Вы вошли в систему как {user.Role}");
             Console.WriteLine($"Добро пожаловать, {user.FullName}");
             ShowMenu(user);
@@ -114,6 +122,7 @@ class Program
             string password = Console.ReadLine();
 
             User newUser = authService.Register(fullName, passport, id, phone, email, password, selectedRole);
+            logDb.AddLog(fullName, $"Зарегистрирован новый пользователь (роль: {selectedRole})");
 
             if (selectedRole == UserRole.Client)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.BankingSystem.Core.Interfaces
 {
-    public interface ITransactionCommand
+    public interface ICommand
     {
         void Execute();
         void Undo();

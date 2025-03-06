@@ -1,6 +1,7 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
+using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
     public class Administrator : User
     {
         private TransactionInvoker _transactionInvoker;
+        private LogDatabase logDb;
 
         public Administrator(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Administrator)
         {
             _transactionInvoker = new TransactionInvoker();
+            logDb = new LogDatabase();
         }
 
         public override void PerformRoleActions()
@@ -31,10 +34,12 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             switch (choice)
             {
                 case "1":
-                    ViewAllLogs();
+                    Console.WriteLine("\nИстория логов:");
+                    logDb.ShowLogs();
                     break;
                 case "2":
-                    CancelAllActions();
+                    _transactionInvoker.UndoAllCommands();
+                    Console.WriteLine("Все действия пользователей отменены.");
                     break;
                 case "0":
                     // Exit
@@ -43,16 +48,6 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     Console.WriteLine("Некорректный ввод.");
                     break;
             }
-        }
-
-        private void ViewAllLogs()
-        {
-            LogManager.Instance.ViewLogs();
-        }
-
-        private void CancelAllActions()
-        {
-            _transactionInvoker.UndoAllCommands();
-        }
+        } 
     }
 }

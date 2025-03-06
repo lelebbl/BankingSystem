@@ -1,6 +1,7 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Enums;
+using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,16 +35,20 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 
         public override void HandleAction(string choice)
         {
+            LogDatabase logDb = new LogDatabase();
+
             switch (choice)
             {
                 case "1":
                     AccountManager.OpenAccount(accounts);
+                    logDb.AddLog(FullName, "Открыл новый счет");
                     break;
                 case "2":
                     Account.DisplayAccounts(this);
                     break;
                 case "3":
                     AccountManager.DepositToAccount(accounts);
+                    logDb.AddLog(FullName, "Пополнил счет");
                     break;
                 case "4":
                     AccountManager.WithdrawFromAccount(accounts);
@@ -62,6 +67,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     break;
                 case "9":
                     Transaction.CreateTransaction(this);
+                    logDb.AddLog(FullName, "Перевел средства");
                     break;
                 case "0":
 
