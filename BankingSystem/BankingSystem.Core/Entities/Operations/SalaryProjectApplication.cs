@@ -42,7 +42,6 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
                 return false;
             }
 
-            // Create instances of the required services
             var transactionInvoker = new CommandInvoker();
             var enterpriseService = new EnterpriseService();
             var specialist = new Specialist("Specialist Name", "Passport Number", "ID Number", "Phone", "Email", "Password", transactionInvoker);
@@ -83,6 +82,19 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
                 }
             }
             return true;
+        }
+
+        public void Cancel()
+        {
+            if (IsApproved)
+            {
+                IsApproved = false;
+                Console.WriteLine($"Заявка на зарплатный проект для предприятия {Enterprise.LegalName} отменена.");
+            }
+            else
+            {
+                Console.WriteLine("Заявка на зарплатный проект не была одобрена.");
+            }
         }
     }
 }

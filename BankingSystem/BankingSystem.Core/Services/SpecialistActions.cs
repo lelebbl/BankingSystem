@@ -58,11 +58,31 @@ namespace BankingSystem.BankingSystem.Core.Services
             return newEnterprise;
         }
 
+        public void UnregisterEnterprise(ConcreteEnterprise enterprise)
+        {
+            enterpriseService.UnregisterEnterprise(enterprise);
+            Console.WriteLine($"Предприятие {enterprise.LegalName} удалено.");
+        }
+
         public void ApplyForSalaryProject(ConcreteEnterprise enterprise)
         {
             SalaryProjectApplication application = new SalaryProjectApplication(enterprise);
             Program.selectedBank.AddSalaryProjectApplication(application);
             Console.WriteLine("Заявка на зарплатный проект подана и ожидает одобрения оператором.");
+        }
+
+        public void CancelSalaryProjectApplication(ConcreteEnterprise enterprise)
+        {
+            SalaryProjectApplication application = Program.selectedBank.GetSalaryProjectApplication(enterprise.LegalName);
+            if (application != null)
+            {
+                Program.selectedBank.RemoveSalaryProjectApplication(application);
+                Console.WriteLine("Заявка на зарплатный проект отменена.");
+            }
+            else
+            {
+                Console.WriteLine("Заявка на зарплатный проект не найдена.");
+            }
         }
 
         public void FinalizeSalaryProject(ConcreteEnterprise enterprise)
@@ -97,6 +117,20 @@ namespace BankingSystem.BankingSystem.Core.Services
             }
         }
 
+        public void CancelFinalizeSalaryProject(ConcreteEnterprise enterprise)
+        {
+            var application = Program.selectedBank.GetSalaryProjectApplication(enterprise.LegalName);
+            if (application != null && application.IsApproved)
+            {
+                application.Cancel();
+                Console.WriteLine("Оформление зарплатного проекта отменено.");
+            }
+            else
+            {
+                Console.WriteLine("Заявка на зарплатный проект не найдена или не одобрена.");
+            }
+        }
+
         public Client RegisterNewClient(string employeeName)
         {
             Console.Write("Введите паспортные данные сотрудника: ");
@@ -125,24 +159,20 @@ namespace BankingSystem.BankingSystem.Core.Services
             return accountNumber;
         }
 
-        public void DepositToEnterpriseAccount(ConcreteEnterprise enterprise)
+        public void DepositToEnterpriseAccount(ConcreteEnterprise enterprise, decimal amount)
         {
-            Console.Write("Введите сумму для пополнения счета: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
-            {
-                enterprise.Deposit(amount);
-                Console.WriteLine($"Счет предприятия пополнен на {amount} руб.");
-            }
-            else
-            {
-                Console.WriteLine("Некорректная сумма.");
-            }
+            enterprise.Deposit(amount);
+            Console.WriteLine($"Счет предприятия пополнен на {amount} руб.");
         }
 
-        public void TransferFundsToEmployee()
+        public void UndoDepositToEnterpriseAccount(ConcreteEnterprise enterprise, decimal amount)
         {
-            Console.Write("Введите ФИО сотрудника: ");
-            string employeeName = Console.ReadLine();
+            enterprise.Withdraw(amount);
+            Console.WriteLine($"Пополнение счета предприятия на {amount} руб. отменено.");
+        }
+
+        public void TransferFundsToEmployee(string employeeName, decimal amount)
+        {
             var client = Program.selectedBank.Clients.FirstOrDefault(c => c.FullName == employeeName);
 
             if (client == null)
@@ -154,8 +184,7 @@ namespace BankingSystem.BankingSystem.Core.Services
             var existingAccount = client.accounts.FirstOrDefault();
             string accountNumber = existingAccount?.AccountNumber ?? OpenEmployeeAccount(employeeName, client);
 
-            Console.Write("Введите сумму перевода: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && specialist.enterprise.Balance >= amount)
+            if (specialist.enterprise.Balance >= amount)
             {
                 specialist.enterprise.Withdraw(amount);
                 client.Deposit(accountNumber, amount);
@@ -163,7 +192,30 @@ namespace BankingSystem.BankingSystem.Core.Services
             }
             else
             {
-                Console.WriteLine("Недостаточно средств или некорректный ввод суммы.");
+                Console.WriteLine("Недостаточно средств.");
+            }
+        }
+
+        public void UndoTransferFundsToEmployee(string employeeName, decimal amount)
+        {
+            var client = Program.selectedBank.Clients.FirstOrDefault(c => c.FullName == employeeName);
+            if (client != null)
+            {
+                var account = client.accounts.FirstOrDefault();
+                if (account != null && account.Balance >= amount)
+                {
+                    account.Withdraw(amount);
+                    specialist.enterprise.Deposit(amount);
+                    Console.WriteLine($"Перевод средств сотруднику {employeeName} на сумму {amount} руб. отменен.");
+                }
+                else
+                {
+                    Console.WriteLine("Недостаточно средств на счете сотрудника для отмены перевода.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Сотрудник не найден.");
             }
         }
     }

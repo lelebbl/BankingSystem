@@ -1,4 +1,5 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Commands.SpecialistCommands;
 using BankingSystem.BankingSystem.Core.Entities.Banks;
 using BankingSystem.BankingSystem.Core.Entities.Enterprises;
 using BankingSystem.BankingSystem.Core.Enums;
@@ -17,12 +18,14 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         private bool isEnterpriseRegistered = false;
         internal ConcreteEnterprise enterprise;
         private SpecialistActions specialistActions;
+        private CommandInvoker transactionInvoker;
 
         public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Specialist)
         {
             enterpriseService = new EnterpriseService();
             specialistActions = new SpecialistActions(enterpriseService, this, transactionInvoker);
+            this.transactionInvoker = transactionInvoker;
         }
 
         public override void PerformRoleActions()
@@ -40,24 +43,48 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             switch (choice)
             {
                 case "1":
-                    enterprise = specialistActions.RegisterEnterprise(Program.selectedBank);
+                    var registerEnterpriseCommand = new RegisterEnterpriseCommand(specialistActions, Program.selectedBank);
+                    transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
+                    enterprise = registerEnterpriseCommand.Enterprise;
                     isEnterpriseRegistered = true;
                     break;
                 case "2":
                     EnsureEnterpriseRegistered();
-                    specialistActions.ApplyForSalaryProject(enterprise);
+                    var applyForSalaryProjectCommand = new ApplyForSalaryProjectCommand(specialistActions, enterprise);
+                    transactionInvoker.ExecuteCommand(applyForSalaryProjectCommand);
                     break;
                 case "3":
                     EnsureEnterpriseRegistered();
-                    specialistActions.FinalizeSalaryProject(enterprise);
+                    var finalizeSalaryProjectCommand = new FinalizeSalaryProjectCommand(specialistActions, enterprise);
+                    transactionInvoker.ExecuteCommand(finalizeSalaryProjectCommand);
                     break;
                 case "4":
                     EnsureEnterpriseRegistered();
-                    specialistActions.TransferFundsToEmployee();
+                    Console.Write("Введите ФИО сотрудника: ");
+                    string employeeName = Console.ReadLine();
+                    Console.Write("Введите сумму перевода: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+                    {
+                        var transferFundsToEmployeeCommand = new TransferFundsToEmployeeCommand(specialistActions, employeeName, amount);
+                        transactionInvoker.ExecuteCommand(transferFundsToEmployeeCommand);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Некорректный ввод суммы.");
+                    }
                     break;
                 case "5":
                     EnsureEnterpriseRegistered();
-                    specialistActions.DepositToEnterpriseAccount(enterprise);
+                    Console.Write("Введите сумму для пополнения счета: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal depositAmount))
+                    {
+                        var depositToEnterpriseAccountCommand = new DepositToEnterpriseAccountCommand(specialistActions, enterprise, depositAmount);
+                        transactionInvoker.ExecuteCommand(depositToEnterpriseAccountCommand);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Некорректный ввод суммы.");
+                    }
                     break;
                 case "6":
                     // Выход
@@ -73,7 +100,9 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             if (!isEnterpriseRegistered)
             {
                 Console.WriteLine("Пожалуйста, зарегистрируйте предприятие.");
-                enterprise = specialistActions.RegisterEnterprise(Program.selectedBank);
+                var registerEnterpriseCommand = new RegisterEnterpriseCommand(specialistActions, Program.selectedBank);
+                transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
+                enterprise = registerEnterpriseCommand.Enterprise;
                 isEnterpriseRegistered = true;
             }
         }

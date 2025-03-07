@@ -24,6 +24,12 @@ namespace BankingSystem.BankingSystem.Core.Services
             enterprise.Bank.RegisterEnterprise(enterprise);
         }
 
+        public void UnregisterEnterprise(Enterprise enterprise)
+        {
+            Enterprises.Remove(enterprise);
+            enterprise.Bank.UnregisterEnterprise(enterprise);
+        }
+
         public Enterprise CreateEnterprise(string type, string legalName, string unp, string legalAddress, Bank bank, string bik)
         {
             return new ConcreteEnterprise(type, legalName, unp, legalAddress, bank, bik, enterpriseService);

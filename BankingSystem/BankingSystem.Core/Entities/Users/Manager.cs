@@ -45,10 +45,10 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     ApproveInstallmentApplications();
                     break;
                 case "4":
-                    _transactionInvoker.UndoLastCommand();
+                    
                     break;
                 case "0":
-                    Console.WriteLine("Возврат в главное меню...");
+                   
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод. Попробуйте снова.");

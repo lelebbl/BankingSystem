@@ -41,6 +41,11 @@ namespace BankingSystem.BankingSystem.Core.Entities.Banks
             salaryProjectApplications.Add(application);
         }
 
+        public void RemoveSalaryProjectApplication(SalaryProjectApplication application)
+        {
+            salaryProjectApplications.Remove(application);
+        }
+
         public List<SalaryProjectApplication> GetAllSalaryProjectApplications()
         {
             return salaryProjectApplications.ToList();
@@ -49,6 +54,11 @@ namespace BankingSystem.BankingSystem.Core.Entities.Banks
         public SalaryProjectApplication GetSalaryProjectApplication(string legalName)
         {
             return salaryProjectApplications.FirstOrDefault(app => app.Enterprise.LegalName == legalName);
+        }
+
+        public void UnregisterEnterprise(Enterprise enterprise)
+        {
+            Enterprises.Remove(enterprise);
         }
     }
 
