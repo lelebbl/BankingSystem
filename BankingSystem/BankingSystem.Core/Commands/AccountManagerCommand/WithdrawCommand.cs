@@ -1,4 +1,5 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
+using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
                 {
                     account.Withdraw(_amount);
                     Console.WriteLine($"Снято {_amount}. Текущий баланс: {account.Balance}");
+
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.AddTransaction("Клиент", "Снятие со счета", _amount, _accountNumber);
                 }
                 else
                 {
@@ -48,6 +52,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
             {
                 account.Deposit(_amount);
                 Console.WriteLine($"Отмена снятия на {_amount}. Текущий баланс: {account.Balance}");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена снятия со счета", _amount, _accountNumber);
             }
         }
     }

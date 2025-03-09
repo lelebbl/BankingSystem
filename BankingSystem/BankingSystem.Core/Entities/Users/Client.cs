@@ -2,8 +2,8 @@
 using BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand;
 using BankingSystem.BankingSystem.Core.Commands.OperationsCommand;
 using BankingSystem.BankingSystem.Core.Entities.Accounts;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Enums;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
@@ -52,6 +52,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     break;
                 case "2":
                     Account.DisplayAccounts(this);
+                    logDb.AddLog(FullName, "Просмотрел все счета");
                     break;
                 case "3":
                     AccountManager.DepositToAccount(accounts, _transactionInvoker);
@@ -59,21 +60,26 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     break;
                 case "4":
                     AccountManager.WithdrawFromAccount(accounts, _transactionInvoker);
+                    logDb.AddLog(FullName, "Снял средства со счета");
                     break;
                 case "5":
                     AccountManager.CloseAccount(accounts, _transactionInvoker);
+                    logDb.AddLog(FullName, "Закрыл счет");
                     break;
                 case "6":
                     var loanApplicationCommand = new LoanApplicationCommand(this, applications);
                     _transactionInvoker.ExecuteCommand(loanApplicationCommand);
+                    logDb.AddLog(FullName, "Подал заявку на кредит");
                     break;
                 case "7":
                     var installmentApplicationCommand = new InstallmentApplicationCommand(this, applications);
                     _transactionInvoker.ExecuteCommand(installmentApplicationCommand);
+                    logDb.AddLog(FullName, "Подал заявку на рассрочку");
                     break;
                 case "8":
                     var depositAccountCommand = new DepositAccountCommand(this, accounts);
                     _transactionInvoker.ExecuteCommand(depositAccountCommand);
+                    logDb.AddLog(FullName, "Создал вклад");
                     break;
                 case "9":
                     var transactionCommand = new TransactionCommand(this);
@@ -81,7 +87,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     logDb.AddLog(FullName, "Перевел средства");
                     break;
                 case "0":
-
+                    
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод. Попробуйте снова.");

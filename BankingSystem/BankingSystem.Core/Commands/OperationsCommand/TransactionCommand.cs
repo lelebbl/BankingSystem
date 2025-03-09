@@ -1,11 +1,12 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using BankingSystem.BankingSystem.Core.Entities.Users;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
+using BankingSystem.BankingSystem.Data;
 
 namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
@@ -66,6 +67,10 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
             _createdTransaction = new Transaction(_fromAccountNumber, _toAccountNumber, _amount);
             _client.transactions.Add(_createdTransaction);
             Console.WriteLine($"Перевод {_amount} руб. выполнен успешно с {_fromAccountNumber} на {_toAccountNumber}. Текущий баланс: {fromAccount.Balance}");
+
+            TransactionDatabase transactionDb = new TransactionDatabase();
+            transactionDb.AddTransaction("Клиент", "Перевод средств со счета", _amount, _fromAccountNumber);
+            transactionDb.AddTransaction("Клиент", "Перевод средств на счет", _amount, _toAccountNumber);
         }
 
         public void Undo()
@@ -81,6 +86,10 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                     fromAccount.Deposit(_amount);
                     _client.transactions.Remove(_createdTransaction);
                     Console.WriteLine("Перевод отменен и средства возвращены на исходный счет.");
+
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.AddTransaction("Клиент", "Отмена перевода средств со счета", _amount, _fromAccountNumber);
+                    transactionDb.AddTransaction("Клиент", "Отмена перевода средств на счет", _amount, _toAccountNumber);
                 }
             }
         }

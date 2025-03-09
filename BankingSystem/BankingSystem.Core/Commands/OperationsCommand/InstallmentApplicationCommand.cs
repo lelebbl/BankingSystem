@@ -1,11 +1,12 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Entities.Users;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Data;
 
 namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
@@ -39,6 +40,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 _createdInstallment = new Installment(_client, _installmentAmount, _installmentTerm, _accountNumber);
                 _applications.Add(_createdInstallment);
                 Console.WriteLine("Заявка на рассрочку отправлена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Заявка на рассрочку", _installmentAmount, _accountNumber);
             }
             else
             {

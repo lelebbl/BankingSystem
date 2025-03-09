@@ -2,13 +2,13 @@
 using BankingSystem.BankingSystem.Core.Entities.Banks;
 using BankingSystem.BankingSystem.Core.Entities.Enterprises;
 using BankingSystem.BankingSystem.Core.Entities.Users;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 
 namespace BankingSystem.BankingSystem.Core.Services
 {

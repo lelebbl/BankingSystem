@@ -22,7 +22,8 @@ namespace BankingSystem.BankingSystem.Core.Services
             _users.Add(new Manager("Анна Менеджер", "AB1234567", "123456789", "+375291234567", "1", "1", this) { IsApproved = true });
             _users.Add(new Administrator("Петр Администратор", "CD7654321", "987654321", "+375291112233", "4", "4", _transactionInvoker) { IsApproved = true });
             _users.Add(new Client("Ирина Клиент", "MP9876543", "123456789", "+375444567890", "2", "2", _transactionInvoker) { IsApproved = true });
-            _users.Add(new Specialist("Ирина Клиент", "MP9876543", "123456789", "+375444567890", "3", "3", _transactionInvoker) { IsApproved = true });
+            _users.Add(new Specialist("Мария Клиент", "MP9876543", "123456789", "+375444567890", "3", "3", _transactionInvoker) { IsApproved = true });
+            _users.Add(new Operator("Максим Оператор", "MP9876543", "123456789", "+375444567890", "5", "5", _transactionInvoker) { IsApproved = true });
         }
 
         public User Login(string email, string password)
@@ -35,7 +36,7 @@ namespace BankingSystem.BankingSystem.Core.Services
             User newUser = role switch
             {
                 UserRole.Client => new Client(fullName, passport, id, phone, email, password, _transactionInvoker),
-                UserRole.Operator => new Operator(fullName, passport, id, phone, email, password),
+                UserRole.Operator => new Operator(fullName, passport, id, phone, email, password, _transactionInvoker),
                 UserRole.Manager => new Manager(fullName, passport, id, phone, email, password, this),
                 UserRole.Specialist => new Specialist(fullName, passport, id, phone, email, password, _transactionInvoker),
                 UserRole.Administrator => new Administrator(fullName, passport, id, phone, email, password, _transactionInvoker),

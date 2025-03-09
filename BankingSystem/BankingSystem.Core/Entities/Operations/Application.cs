@@ -43,6 +43,22 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
             }
         }
 
+        public void RevokeApproval()
+        {
+            IsApproved = false;
+
+            var account = Account.FindAccount(Applicant.accounts, AccountNumber);
+            if (account != null)
+            {
+                account.Withdraw(Amount);
+                Console.WriteLine($"Одобрение заявки отменено. {Amount} руб. сняты со счета клиента.");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: счет не найден.");
+            }
+        }
+
         private decimal CalculateInterestRate(int termMonths)
         {
             if (termMonths <= 3) return 5;

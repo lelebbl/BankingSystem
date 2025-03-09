@@ -1,11 +1,12 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Entities.Users;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Data;
 
 namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
@@ -39,6 +40,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 _createdLoan = new Loan(_client, _creditAmount, _creditTerm, _accountNumber);
                 _applications.Add(_createdLoan);
                 Console.WriteLine("Заявка на кредит отправлена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Заявка на кредит", _creditAmount, _accountNumber);
             }
             else
             {
@@ -58,8 +62,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 }
                 _applications.Remove(_createdLoan);
                 Console.WriteLine("Заявка на кредит отменена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена одобрения кредита", _creditAmount, _accountNumber);
             }
-            
+
         }
     }
 }

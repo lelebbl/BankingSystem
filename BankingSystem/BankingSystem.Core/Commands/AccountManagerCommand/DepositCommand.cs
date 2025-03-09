@@ -1,4 +1,5 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
+using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
             {
                 account.Deposit(_amount);
                 Console.WriteLine($"Счет пополнен на {_amount}. Текущий баланс: {account.Balance}");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Пополнение счета", _amount, _accountNumber);
             }
             else
             {
@@ -41,6 +45,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
             {
                 account.Withdraw(_amount);
                 Console.WriteLine($"Отмена пополнения на {_amount}. Текущий баланс: {account.Balance}");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена пополнения счета", _amount, _accountNumber);
             }
         }
     }

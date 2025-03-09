@@ -1,6 +1,7 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
+using BankingSystem.BankingSystem.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
     {
         private CommandInvoker _transactionInvoker;
 
-        public Operator(string fullName, string passportNumber, string idNumber, string phone, string email, string password)
+        public Operator(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Operator)
         {
-            _transactionInvoker = new CommandInvoker();
+            _transactionInvoker = transactionInvoker;
         }
 
         public override void PerformRoleActions()
@@ -32,13 +33,14 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             switch (choice)
             {
                 case "1":
-                    ViewTransactionLogs();
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.ShowTransactions();
                     break;
                 case "2":
                     SelectSalaryProjectApplication();
                     break;
                 case "3":
-                    _transactionInvoker.UndoLastCommand();
+                    
                     break;
                 case "0":
                     // Exit
@@ -47,11 +49,6 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     Console.WriteLine("Некорректный ввод.");
                     break;
             }
-        }
-
-        private void ViewTransactionLogs()
-        {
-            LogManager.Instance.ViewLogs();
         }
 
         private void SelectSalaryProjectApplication()

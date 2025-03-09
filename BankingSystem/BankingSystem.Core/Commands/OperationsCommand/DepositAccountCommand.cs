@@ -1,11 +1,12 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Accounts;
-using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Entities.Users;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Data;
 
 namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
@@ -52,8 +53,10 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                     account.Withdraw(_depositAmount);
                     _createdDepositAccount = new DepositAccount(_accountNumber, account.Balance, _depositAmount, _interestRate, _termMonths);
                     _client.accounts.Add(_createdDepositAccount);
-
                     Console.WriteLine($"Вклад создан на сумму {_depositAmount} с процентом {_interestRate}%. Текущий баланс: {account.Balance}");
+
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.AddTransaction("Клиент", "Создание вклада", _depositAmount, _accountNumber);
                 }
                 else
                 {
@@ -74,6 +77,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 var account = Account.FindAccount(_client.accounts, _accountNumber);
                 account.Deposit(_depositAmount);
                 Console.WriteLine("Вклад отменен и средства возвращены на счет.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена вклада", _depositAmount, _accountNumber);
             }
         }
 

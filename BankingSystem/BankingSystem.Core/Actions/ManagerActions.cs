@@ -82,7 +82,7 @@ namespace BankingSystem.BankingSystem.Core.Actions
             }
         }
 
-        private static List<T> GetPendingApplications<T>(AuthService authService) where T : Application
+        public static List<T> GetPendingApplications<T>(AuthService authService) where T : Application
         {
             var allClients = authService.GetAllClients();
             var pendingApplications = new List<T>();
