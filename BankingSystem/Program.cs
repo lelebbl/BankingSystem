@@ -19,15 +19,18 @@ class Program
     static void Main()
     {
         logDb.AddLog("Система", "Запуск программы");
+        SelectBank();
+
         while (true)
         {
-            SelectBank();
+            ShowMainMenu();
         }
     }
 
     static void SelectBank()
 
     {
+        Console.Clear();
         Console.WriteLine("\nВыберите банк:");
         for (int i = 0; i < bankService.Banks.Count; i++)
         {
@@ -51,19 +54,22 @@ class Program
 
     static void ShowMainMenu()
     {
-        Console.WriteLine($"\nВы работаете с {selectedBank.Name}");
+        Console.Clear();
+
+        DisplayBankFrame($"Вы работаете с {selectedBank.Name}");
+
         Console.WriteLine("\nДобро пожаловать в банковскую систему!");
         Console.WriteLine("1 - Войти");
         Console.WriteLine("2 - Зарегистрироваться");
         Console.WriteLine("3 - Сменить банк");
-        Console.WriteLine("4 - Выйти");
+        Console.WriteLine("0 - Выйти");
 
         switch (Console.ReadLine())
         {
             case "1": Login(); break;
             case "2": Register(); break;
             case "3": SelectBank(); break; 
-            case "4":
+            case "0":
                 logDb.AddLog("Система", "Выход из программы");
                 Environment.Exit(0);
                 break;
@@ -73,7 +79,11 @@ class Program
 
     static void Login()
     {
-        Console.Write("Введите email: ");
+        Console.Clear();
+
+        DisplayBankFrame($"Вы работаете с {selectedBank.Name}");
+
+        Console.Write("\nВведите email: ");
         string email = Console.ReadLine();
         Console.Write("Введите пароль: ");
         string password = Console.ReadLine();
@@ -83,23 +93,32 @@ class Program
         {
             if (!user.IsApproved)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Ваш аккаунт еще не одобрен менеджером.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
             logDb.AddLog(user.FullName, $"Вход в систему (роль: {user.Role})");
             Console.WriteLine($"Вы вошли в систему как {user.Role}");
             Console.WriteLine($"Добро пожаловать, {user.FullName}");
+            Console.ReadKey();
             ShowMenu(user);
         }
         else
         {
             Console.WriteLine("Пользователь не найден.");
+            Console.ReadKey();
         }
     }
 
     static void Register()
     {
-        Console.WriteLine("Выберите роль:");
+        Console.Clear();
+
+        DisplayBankFrame($"Вы работаете с {selectedBank.Name}");
+
+        Console.WriteLine("\nВыберите роль:");
         Console.WriteLine("1 - Клиент");
         Console.WriteLine("2 - Оператор");
         Console.WriteLine("3 - Менеджер");
@@ -110,7 +129,7 @@ class Program
         {
             UserRole selectedRole = (UserRole)(roleChoice - 1);
 
-            Console.Write("Введите ФИО: ");
+            Console.Write("\nВведите ФИО: ");
             string fullName = Console.ReadLine();
             Console.Write("Введите серию и номер паспорта: ");
             string passport = Console.ReadLine();
@@ -128,17 +147,22 @@ class Program
 
             if (selectedRole == UserRole.Client)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Ожидайте одобрения менеджера.");
+                Console.ResetColor();
+                Console.ReadKey();
             }
             else
             {
                 Console.WriteLine($"Добро пожаловать, {newUser.FullName}!");
+                Console.ReadKey();
                 ShowMenu(newUser);
             }
         }
         else
         {
             Console.WriteLine("Некорректный ввод, попробуйте снова.");
+            Console.ReadKey();
         }
     }
 
@@ -147,6 +171,10 @@ class Program
     {
         while (true)
         {
+            Console.Clear();
+
+            DisplayBankFrame($"Вы работаете с {selectedBank.Name}");
+
             Console.WriteLine("\nДоступные действия:");
             user.PerformRoleActions();
             Console.Write("Выберите действие: ");
@@ -154,12 +182,20 @@ class Program
 
             if (choice == "0")
             {
-                Console.WriteLine("Возврат в главное меню...");
                 ShowMainMenu();
                 break;
             }
 
             user.HandleAction(choice);
+            Console.ReadKey();
         }
+    }
+
+    static void DisplayBankFrame(string text)
+    {
+        int width = 50;
+        Console.WriteLine($"┌{new string('─', width - 2)}┐");
+        Console.WriteLine($"│{text.PadLeft((width + text.Length) / 2).PadRight(width - 2)}│");
+        Console.WriteLine($"└{new string('─', width - 2)}┘");
     }
 }
