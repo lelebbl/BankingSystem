@@ -63,6 +63,5 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     break;
             }
         }
-
     }
 }

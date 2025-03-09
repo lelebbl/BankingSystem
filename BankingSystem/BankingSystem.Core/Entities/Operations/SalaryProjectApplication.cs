@@ -29,6 +29,13 @@ namespace BankingSystem.BankingSystem.Core.Entities.Operations
             Console.WriteLine($"Заявка на зарплатный проект для предприятия {Enterprise.LegalName} одобрена.");
         }
 
+        public void Reject()
+        {
+            IsApproved = false;
+            Console.WriteLine($"Заявка на зарплатный проект для предприятия {Enterprise.LegalName} отклонена.");
+        }
+
+
         public void SetEmployeeNames(List<string> employeeNames)
         {
             EmployeeNames = employeeNames;

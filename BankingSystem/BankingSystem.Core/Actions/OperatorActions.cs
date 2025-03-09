@@ -1,5 +1,6 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
 using BankingSystem.BankingSystem.Core.Commands.OperationsCommand;
+using BankingSystem.BankingSystem.Core.Commands.OperatorActionsCommand;
 using BankingSystem.BankingSystem.Core.Commands.SpecialistCommands;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,8 @@ namespace BankingSystem.BankingSystem.Core.Actions
             Console.Write("Введите номер заявки для одобрения: ");
             if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= applications.Count)
             {
-                var application = applications[index - 1];
-                application.Approve();
+                var command = new ApproveSalaryProjectApplicationCommand(applications, index - 1);
+                transactionInvoker.ExecuteCommand(command);
             }
             else
             {
@@ -43,7 +44,7 @@ namespace BankingSystem.BankingSystem.Core.Actions
             var history = transactionInvoker.GetCommandHistory();
 
             var filteredCommands = history
-                .Where(cmd => cmd is TransactionCommand)
+                .Where(cmd => cmd is ApproveSalaryProjectApplicationCommand)
                 .ToList();
 
             if (filteredCommands.Count == 0)
