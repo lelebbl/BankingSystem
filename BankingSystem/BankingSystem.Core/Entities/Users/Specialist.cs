@@ -37,7 +37,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             Console.WriteLine("3 - Оформить зарплатный проект (после одобрения)");
             Console.WriteLine("4 - Перевести средства сотруднику");
             Console.WriteLine("5 - Пополнить счет предприятия");
-            Console.WriteLine("6 - Выйти");
+            Console.WriteLine("0 - Выйти");
         }
 
         public override void HandleAction(string choice)
@@ -88,8 +88,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                         Console.WriteLine("Некорректный ввод суммы.");
                     }
                     break;
-                case "6":
-                    // Выход
+                case "0":
+                    
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод.");
