@@ -86,8 +86,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     _transactionInvoker.ExecuteCommand(transactionCommand);
                     logDb.AddLog(FullName, "Перевел средства");
                     break;
-                case "0":
-                    
+                case "0":                    
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод. Попробуйте снова.");

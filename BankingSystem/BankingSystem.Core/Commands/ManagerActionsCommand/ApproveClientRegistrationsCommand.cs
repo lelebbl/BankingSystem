@@ -10,6 +10,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand
 {
     public class ApproveClientRegistrationsCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Одобрение регистрации клиента";
+        }
+
         private readonly AuthService _authService;
         private List<User> _approvedUsers;
 

@@ -1,4 +1,5 @@
 ﻿using BankingSystem.BankingSystem.Core.Commands;
+using BankingSystem.BankingSystem.Core.Commands.SpecialistCommands;
 using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Services;
 using System;
@@ -101,10 +102,39 @@ namespace BankingSystem.BankingSystem.Core.Actions
             return pendingApplications;
         }
 
-        public static void UndoLastUserAction(CommandInvoker transactionInvoker)
+        public static void ShowSpecialistCommandHistoryAndUndo(CommandInvoker transactionInvoker)
         {
-            transactionInvoker.UndoLastCommand();
-            Console.WriteLine("Последнее действие пользователя отменено.");
+            var history = transactionInvoker.GetCommandHistory();
+
+            var filteredCommands = history
+                .Where(cmd => cmd is ApplyForSalaryProjectCommand
+                           || cmd is DepositToEnterpriseAccountCommand
+                           || cmd is FinalizeSalaryProjectCommand
+                           || cmd is RegisterEnterpriseCommand
+                           || cmd is TransferFundsToEmployeeCommand)
+                .ToList();
+
+            if (filteredCommands.Count == 0)
+            {
+                Console.WriteLine("Нет подходящих команд для отмены.");
+                return;
+            }
+
+            Console.WriteLine("Доступные команды для отмены:");
+            for (int i = 0; i < filteredCommands.Count; i++)
+            {
+                Console.WriteLine($"{i} - {filteredCommands[i].GetActionName()}");
+            }
+
+            Console.Write("Введите индекс команды для отмены: ");
+            if (int.TryParse(Console.ReadLine(), out int index) && index >= 0 && index < filteredCommands.Count)
+            {
+                transactionInvoker.UndoCommand(filteredCommands[index]);
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод.");
+            }
         }
     }
 }

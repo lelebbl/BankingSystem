@@ -11,6 +11,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.SpecialistCommands
 {
     public class DepositToEnterpriseAccountCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Пополнение счета предприятия";
+        }
+
         private SpecialistActions _specialistActions;
         private ConcreteEnterprise _enterprise;
         private decimal _amount;

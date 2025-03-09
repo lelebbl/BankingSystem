@@ -12,6 +12,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
     public class TransactionCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Перевод средств"; 
+        }
+
         private Client _client;
         private string _fromAccountNumber;
         private string _toAccountNumber;

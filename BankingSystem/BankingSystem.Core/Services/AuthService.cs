@@ -60,11 +60,6 @@ namespace BankingSystem.BankingSystem.Core.Services
             Console.WriteLine($"Менеджер одобрил регистрацию клиента: {user.FullName}");
         }
 
-        /// Получение всех зарегистрированных пользователей (для администратора)
-        public List<User> GetAllUsers()
-        {
-            return _users;
-        }
         public List<Client> GetAllClients()
         {
             return _users.OfType<Client>().ToList();

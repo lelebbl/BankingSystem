@@ -11,6 +11,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.SpecialistCommands
 {
     public class RegisterEnterpriseCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Регистрация предприятия";
+        }
+
         private SpecialistActions _specialistActions;
         private Bank _bank;
         private ConcreteEnterprise _enterprise;

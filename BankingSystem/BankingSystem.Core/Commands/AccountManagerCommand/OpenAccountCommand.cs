@@ -9,6 +9,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
 {
     public class OpenAccountCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Открытие счета";
+        }
+
         private List<Account> _accounts;
         private Account _createdAccount;
 

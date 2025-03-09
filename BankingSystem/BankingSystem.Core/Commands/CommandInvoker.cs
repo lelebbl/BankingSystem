@@ -57,7 +57,6 @@ namespace BankingSystem.BankingSystem.Core.Commands
                 var command = commands[index];
                 command.Undo();
 
-                // Удаляем команду из стека
                 var newStack = new Stack<ICommand>();
                 for (int i = 0; i < _transactionHistory.Count; i++)
                 {
@@ -78,6 +77,27 @@ namespace BankingSystem.BankingSystem.Core.Commands
                 Console.WriteLine("Неверный индекс команды.");
             }
         }
+
+        public void UndoCommand(ICommand command)
+        {
+            if (_transactionHistory.Contains(command))
+            {
+                var newStack = new Stack<ICommand>(_transactionHistory.Where(c => c != command));
+                _transactionHistory.Clear();
+                foreach (var cmd in newStack)
+                {
+                    _transactionHistory.Push(cmd);
+                }
+
+                command.Undo();
+                Console.WriteLine("Команда отменена.");
+            }
+            else
+            {
+                Console.WriteLine("Команда не найдена в истории.");
+            }
+        }
+
     }
 }
 

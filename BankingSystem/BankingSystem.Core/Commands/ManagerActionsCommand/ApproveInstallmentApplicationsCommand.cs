@@ -12,6 +12,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand
 {
     public class ApproveInstallmentApplicationsCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Одобрение заявки на рассрочку";
+        }
+
         private readonly AuthService _authService;
         private List<Installment> _approvedInstallments;
 

@@ -10,6 +10,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.SpecialistCommands
 {
     public class TransferFundsToEmployeeCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Перевод средств сотруднику предприятия";
+        }
+
         private SpecialistActions _specialistActions;
         private string _employeeName;
         private decimal _amount;

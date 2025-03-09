@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Data;
 
 namespace BankingSystem.BankingSystem.Core.Entities.Users
 {
@@ -20,14 +21,14 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         private bool isEnterpriseRegistered = false;
         internal ConcreteEnterprise enterprise;
         private SpecialistActions specialistActions;
-        private CommandInvoker transactionInvoker;
+        private CommandInvoker _transactionInvoker;
 
         public Specialist(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Specialist)
         {
             enterpriseService = new EnterpriseService();
             specialistActions = new SpecialistActions(enterpriseService, this, transactionInvoker);
-            this.transactionInvoker = transactionInvoker;
+            this._transactionInvoker = transactionInvoker;
         }
 
         public override void PerformRoleActions()
@@ -42,23 +43,28 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 
         public override void HandleAction(string choice)
         {
+            LogDatabase logDb = new LogDatabase();
+
             switch (choice)
             {
                 case "1":
                     var registerEnterpriseCommand = new RegisterEnterpriseCommand(specialistActions, Program.selectedBank);
-                    transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
+                    _transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
                     enterprise = registerEnterpriseCommand.Enterprise;
                     isEnterpriseRegistered = true;
+                    logDb.AddLog(FullName, "Зарегистрировал предприятие");
                     break;
                 case "2":
                     EnsureEnterpriseRegistered();
                     var applyForSalaryProjectCommand = new ApplyForSalaryProjectCommand(specialistActions, enterprise);
-                    transactionInvoker.ExecuteCommand(applyForSalaryProjectCommand);
+                    _transactionInvoker.ExecuteCommand(applyForSalaryProjectCommand);
+                    logDb.AddLog(FullName, "Подал заявку на зарплатный проект");
                     break;
                 case "3":
                     EnsureEnterpriseRegistered();
                     var finalizeSalaryProjectCommand = new FinalizeSalaryProjectCommand(specialistActions, enterprise);
-                    transactionInvoker.ExecuteCommand(finalizeSalaryProjectCommand);
+                    _transactionInvoker.ExecuteCommand(finalizeSalaryProjectCommand);
+                    logDb.AddLog(FullName, "Оформил зарплатный проект");
                     break;
                 case "4":
                     EnsureEnterpriseRegistered();
@@ -68,7 +74,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                     {
                         var transferFundsToEmployeeCommand = new TransferFundsToEmployeeCommand(specialistActions, employeeName, amount);
-                        transactionInvoker.ExecuteCommand(transferFundsToEmployeeCommand);
+                        _transactionInvoker.ExecuteCommand(transferFundsToEmployeeCommand);
+                        logDb.AddLog(FullName, "Перевел средства сотруднику");
                     }
                     else
                     {
@@ -81,15 +88,15 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     if (decimal.TryParse(Console.ReadLine(), out decimal depositAmount))
                     {
                         var depositToEnterpriseAccountCommand = new DepositToEnterpriseAccountCommand(specialistActions, enterprise, depositAmount);
-                        transactionInvoker.ExecuteCommand(depositToEnterpriseAccountCommand);
+                        _transactionInvoker.ExecuteCommand(depositToEnterpriseAccountCommand);
+                        logDb.AddLog(FullName, "Пополнил счет предприятия");
                     }
                     else
                     {
                         Console.WriteLine("Некорректный ввод суммы.");
                     }
                     break;
-                case "0":
-                    
+                case "0":                    
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод.");
@@ -103,7 +110,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             {
                 Console.WriteLine("Пожалуйста, зарегистрируйте предприятие.");
                 var registerEnterpriseCommand = new RegisterEnterpriseCommand(specialistActions, Program.selectedBank);
-                transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
+                _transactionInvoker.ExecuteCommand(registerEnterpriseCommand);
                 enterprise = registerEnterpriseCommand.Enterprise;
                 isEnterpriseRegistered = true;
             }

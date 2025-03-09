@@ -12,6 +12,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
     public class DepositAccountCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Создание вклада";
+        }
+
         private Client _client;
         private string _accountNumber;
         private decimal _depositAmount;

@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Commands;
+﻿using BankingSystem.BankingSystem.Core.Actions;
+using BankingSystem.BankingSystem.Core.Commands;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
 using BankingSystem.BankingSystem.Data;
@@ -47,45 +48,15 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     Console.WriteLine("Последнее действие отменено.");
                     break;
                 case "4":
-                    ShowCommandHistoryAndUndo();
+                    AdministratorActions.ShowCommandHistoryAndUndo(_transactionInvoker);
                     break;
                 case "0":
-                    // Exit
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод.");
                     break;
             }
         }
-
-        private void ShowCommandHistoryAndUndo()
-        {
-            var history = _transactionInvoker.GetCommandHistory();
-            if (history.Count == 0)
-            {
-                Console.WriteLine("Нет выполненных команд.");
-                return;
-            }
-
-            Console.WriteLine("Выполненные команды:");
-            for (int i = 0; i < history.Count; i++)
-            {
-                Console.WriteLine($"{i} - {history[i].GetType().Name}");
-            }
-
-            Console.Write("Введите индекс команды для отмены: ");
-            if (int.TryParse(Console.ReadLine(), out int index))
-            {
-                _transactionInvoker.UndoCommandAtIndex(index);
-            }
-            else
-            {
-                Console.WriteLine("Некорректный ввод.");
-            }
-        }
-
-
-
     }
 }
 

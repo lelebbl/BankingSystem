@@ -12,6 +12,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
     public class InstallmentApplicationCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Заявка на рассрочку";
+        }
+
         private Client _client;
         private string _accountNumber;
         private decimal _installmentAmount;
@@ -62,6 +67,9 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 }
                 _applications.Remove(_createdInstallment);
                 Console.WriteLine("Заявка на рассрочку отменена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена перевода средств по кредиту", _installmentAmount, _accountNumber);
             }
             
         }

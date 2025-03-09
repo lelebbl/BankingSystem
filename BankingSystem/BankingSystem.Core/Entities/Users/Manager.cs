@@ -30,7 +30,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             Console.WriteLine("1 - Одобрить регистрацию клиентов");
             Console.WriteLine("2 - Подтвердить кредиты");
             Console.WriteLine("3 - Подтвердить рассрочку");
-            Console.WriteLine("4 - Отменить последнее действие пользователя");
+            Console.WriteLine("4 - Отменить операции специалиста");
             Console.WriteLine("0 - Выйти в главное меню");
         }
 
@@ -56,8 +56,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     logDb.AddLog(FullName, "Подтвердил рассрочку");
                     break;
                 case "4":
-                    ManagerActions.UndoLastUserAction(_transactionInvoker);
-                    logDb.AddLog(FullName, "Отменил последнее действие пользователя");
+                    ManagerActions.ShowSpecialistCommandHistoryAndUndo(_transactionInvoker);
+                    logDb.AddLog(FullName, "Отменил операцию специалиста");
                     break;
                 case "0":
                     break;

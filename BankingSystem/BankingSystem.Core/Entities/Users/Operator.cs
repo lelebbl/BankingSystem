@@ -1,4 +1,5 @@
-﻿using BankingSystem.BankingSystem.Core.Commands;
+﻿using BankingSystem.BankingSystem.Core.Actions;
+using BankingSystem.BankingSystem.Core.Commands;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
 using BankingSystem.BankingSystem.Data;
@@ -13,6 +14,7 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
     public class Operator : User
     {
         private CommandInvoker _transactionInvoker;
+        private bool hasUndoBeenPerformed = false;
 
         public Operator(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Operator)
@@ -30,6 +32,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 
         public override void HandleAction(string choice)
         {
+            LogDatabase logDb = new LogDatabase();
+
             switch (choice)
             {
                 case "1":
@@ -37,13 +41,22 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                     transactionDb.ShowTransactions();
                     break;
                 case "2":
-                    SelectSalaryProjectApplication();
+                    OperatorActions.SelectSalaryProjectApplication(_transactionInvoker);
+                    logDb.AddLog(FullName, "Подтвердил зарплатный проект");
                     break;
                 case "3":
-                    
+                    if (hasUndoBeenPerformed)
+                    {
+                        Console.WriteLine("Отмена перевода уже была выполнена.");
+                    }
+                    else
+                    {
+                        OperatorActions.ShowFilteredCommandHistoryAndUndo(_transactionInvoker);
+                        logDb.AddLog(FullName, "Отменил перевод средств");
+                        hasUndoBeenPerformed = true;
+                    }
                     break;
                 case "0":
-                    // Exit
                     break;
                 default:
                     Console.WriteLine("Некорректный ввод.");
@@ -51,31 +64,5 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             }
         }
 
-        private void SelectSalaryProjectApplication()
-        {
-            var applications = Program.selectedBank.GetAllSalaryProjectApplications();
-            if (applications.Count == 0)
-            {
-                Console.WriteLine("Нет заявок на зарплатный проект.");
-                return;
-            }
-
-            Console.WriteLine("Список заявок на зарплатный проект:");
-            for (int i = 0; i < applications.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. Предприятие: {applications[i].Enterprise.LegalName}");
-            }
-
-            Console.Write("Введите номер заявки для одобрения: ");
-            if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= applications.Count)
-            {
-                var application = applications[index - 1];
-                application.Approve();
-            }
-            else
-            {
-                Console.WriteLine("Некорректный ввод.");
-            }
-        }
     }
 }

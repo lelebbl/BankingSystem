@@ -11,6 +11,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.SpecialistCommands
 {
     public class FinalizeSalaryProjectCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Оформление зарплатного проекта";
+        }
+
         private SpecialistActions _specialistActions;
         private ConcreteEnterprise _enterprise;
 

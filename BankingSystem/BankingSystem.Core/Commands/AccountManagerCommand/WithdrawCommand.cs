@@ -10,6 +10,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
 {
     public class WithdrawCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Снятие со счета";
+        }
+
         private List<Account> _accounts;
         private string _accountNumber;
         private decimal _amount;

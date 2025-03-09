@@ -10,6 +10,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
 {
     public class DepositCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Пополнение счета";
+        }
+
         private List<Account> _accounts;
         private string _accountNumber;
         private decimal _amount;

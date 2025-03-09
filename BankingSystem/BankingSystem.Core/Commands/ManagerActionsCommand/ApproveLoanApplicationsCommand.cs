@@ -13,6 +13,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand
 {
     public class ApproveLoanApplicationsCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Одобрение заявки на кредит";
+        }
+
         private readonly AuthService _authService;
         private List<Loan> _approvedLoans;
 

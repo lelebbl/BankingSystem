@@ -10,5 +10,6 @@ namespace BankingSystem.BankingSystem.Core.Commands
     {
         void Execute();
         void Undo();
+        string GetActionName();
     }
 }

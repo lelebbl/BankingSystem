@@ -9,6 +9,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand
 {
     public class CloseAccountCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Закрытие счета";
+        }
+
         private List<Account> _accounts;
         private string _accountNumber;
         private Account _removedAccount;

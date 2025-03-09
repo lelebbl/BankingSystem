@@ -12,6 +12,11 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 {
     public class LoanApplicationCommand : ICommand
     {
+        public string GetActionName()
+        {
+            return "Заявка на кредит"; 
+        }
+
         private Client _client;
         private string _accountNumber;
         private decimal _creditAmount;
@@ -64,7 +69,7 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
                 Console.WriteLine("Заявка на кредит отменена.");
 
                 TransactionDatabase transactionDb = new TransactionDatabase();
-                transactionDb.AddTransaction("Клиент", "Отмена одобрения кредита", _creditAmount, _accountNumber);
+                transactionDb.AddTransaction("Клиент", "Отмена перевода средств по кредиту", _creditAmount, _accountNumber);
             }
 
         }
