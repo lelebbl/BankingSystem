@@ -27,8 +27,8 @@
     <AssociationLine Name="_transactionInvoker" Type="BankingSystem.BankingSystem.Core.Commands.CommandInvoker" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="20" Y="14.367" />
-        <Point X="20" Y="23.938" />
-        <Point X="23.75" Y="23.938" />
+        <Point X="20" Y="23.531" />
+        <Point X="23.75" Y="23.531" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.155" Y="-0.23" />
@@ -48,8 +48,8 @@
     <AssociationLine Name="_transactionInvoker" Type="BankingSystem.BankingSystem.Core.Commands.CommandInvoker" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="22.25" Y="15.655" />
-        <Point X="22.25" Y="22.938" />
-        <Point X="23.75" Y="22.938" />
+        <Point X="22.25" Y="22.698" />
+        <Point X="23.75" Y="22.698" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.06" Y="-0.216" />
@@ -84,8 +84,8 @@
     <AssociationLine Name="_transactionInvoker" Type="BankingSystem.BankingSystem.Core.Commands.CommandInvoker" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="26.75" Y="14.819" />
-        <Point X="26.75" Y="21.75" />
-        <Point X="25.25" Y="21.75" />
+        <Point X="26.75" Y="21.708" />
+        <Point X="25.25" Y="21.708" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-0.266" Y="0.11" />
@@ -128,8 +128,8 @@
     <AssociationLine Name="_transactionInvoker" Type="BankingSystem.BankingSystem.Core.Commands.CommandInvoker" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="28.5" Y="15.011" />
-        <Point X="28.5" Y="22.875" />
-        <Point X="25.25" Y="22.875" />
+        <Point X="28.5" Y="22.646" />
+        <Point X="25.25" Y="22.646" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.059" Y="-0.281" />
@@ -152,6 +152,9 @@
       <HashCode>AIAAAAAABQAAAACAAAAAAAAgAIAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>BankingSystem.Core\Commands\CommandInvoker.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_transactionHistory" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="BankingSystem.BankingSystem.Data.LogDatabase">
     <Position X="16.75" Y="11.5" Width="1.5" />
@@ -199,10 +202,10 @@
     <AssociationLine Name="transactionInvoker" Type="BankingSystem.BankingSystem.Core.Commands.CommandInvoker" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="33.562" Y="19.103" />
-        <Point X="33.562" Y="23.938" />
-        <Point X="30.864" Y="23.938" Type="JumpStart" />
-        <Point X="30.698" Y="23.938" Type="JumpEnd" />
-        <Point X="25.25" Y="23.938" />
+        <Point X="33.562" Y="23.531" />
+        <Point X="30.864" Y="23.531" Type="JumpStart" />
+        <Point X="30.698" Y="23.531" Type="JumpEnd" />
+        <Point X="25.25" Y="23.531" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.06" Y="-0.255" />
@@ -313,8 +316,8 @@
     <Position X="17.5" Y="26.5" Width="1.5" />
     <AssociationLine Name="_client" Type="BankingSystem.BankingSystem.Core.Entities.Users.Client" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="17.5" Y="26.687" />
-        <Point X="17.125" Y="26.687" />
+        <Point X="17.5" Y="26.675" />
+        <Point X="17.125" Y="26.675" />
         <Point X="17.125" Y="16.03" />
         <Point X="19.917" Y="16.03" Type="JumpStart" />
         <Point X="20.083" Y="16.03" Type="JumpEnd" />
@@ -333,6 +336,9 @@
       <Field Name="_client" />
       <Field Name="_createdDepositAccount" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_accounts" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.InstallmentApplicationCommand">
@@ -348,8 +354,8 @@
     </AssociationLine>
     <AssociationLine Name="_createdInstallment" Type="BankingSystem.BankingSystem.Core.Entities.Operations.Installment" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="8.25" Y="28.063" />
-        <Point X="7.375" Y="28.063" />
+        <Point X="8.25" Y="27.97" />
+        <Point X="7.375" Y="27.97" />
         <Point X="7.375" Y="38.05" />
         <Point X="8.562" Y="38.05" />
         <Point X="8.562" Y="37.675" />
@@ -366,14 +372,17 @@
       <Field Name="_client" />
       <Field Name="_createdInstallment" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_applications" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.LoanApplicationCommand">
     <Position X="11" Y="26.75" Width="1.5" />
     <AssociationLine Name="_createdLoan" Type="BankingSystem.BankingSystem.Core.Entities.Operations.Loan" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="12.5" Y="27.938" />
-        <Point X="13.625" Y="27.938" />
+        <Point X="12.5" Y="27.854" />
+        <Point X="13.625" Y="27.854" />
         <Point X="13.625" Y="38.05" />
         <Point X="12.5" Y="38.05" />
         <Point X="12.5" Y="37.675" />
@@ -387,6 +396,9 @@
       <Field Name="_client" />
       <Field Name="_createdLoan" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_applications" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.TransactionCommand">
@@ -501,6 +513,11 @@
   </Class>
   <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.CloseAccountCommand">
     <Position X="21.5" Y="26.5" Width="1.5" />
+    <AssociationLine Name="_accounts" Type="BankingSystem.BankingSystem.Core.Entities.Accounts.Account">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.642" Y="0.415" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAARAQAAAAAAAAAAACAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>BankingSystem.Core\Commands\AccountManagerCommand\CloseAccountCommand.cs</FileName>
@@ -508,6 +525,9 @@
     <ShowAsAssociation>
       <Field Name="_removedAccount" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_accounts" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.OpenAccountCommand">
@@ -519,8 +539,18 @@
     <ShowAsAssociation>
       <Field Name="_createdAccount" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_accounts" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
+  <Interface Name="BankingSystem.BankingSystem.Core.Commands.ICommand">
+    <Position X="23.75" Y="24.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="BankingSystem.BankingSystem.Core.Enums.UserRole">
     <Position X="22" Y="9.75" Width="1.5" />
     <TypeIdentifier>

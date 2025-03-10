@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.CommandInvoker">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAABQAAAACAAAAAAAAgAIAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\CommandInvoker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_transactionHistory" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.CloseAccountCommand" Collapsed="true">
+    <Position X="8.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAARAQAAAAAAAAAAACAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\AccountManagerCommand\CloseAccountCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.DepositCommand" Collapsed="true">
+    <Position X="8.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAARAQAAAAAAAAAAAAAAAAAAABAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\AccountManagerCommand\DepositCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.OpenAccountCommand">
+    <Position X="8.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\AccountManagerCommand\OpenAccountCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.AccountManagerCommand.WithdrawCommand" Collapsed="true">
+    <Position X="18.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAARAQAAAAAAAAAAAAAAAAAAABAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\AccountManagerCommand\WithdrawCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand.ApproveClientRegistrationsCommand">
+    <Position X="10.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAABAQAAAAAAAAgAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\ManagerActionsCommand\ApproveClientRegistrationsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand.ApproveInstallmentApplicationsCommand">
+    <Position X="12.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAABAQAAAAAAAAgAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\ManagerActionsCommand\ApproveInstallmentApplicationsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand.ApproveLoanApplicationsCommand">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAABAQAAAAAAAAgAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\ManagerActionsCommand\ApproveLoanApplicationsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.DepositAccountCommand" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAAAAREQIABAAAAgAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\OperationsCommand\DepositAccountCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.InstallmentApplicationCommand" Collapsed="true">
+    <Position X="10.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAIAAAAAAhEQAAAACAAAAAAAAAAAAABAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\OperationsCommand\InstallmentApplicationCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.LoanApplicationCommand" Collapsed="true">
+    <Position X="16.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAIAAAAABBEQAAgACAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\OperationsCommand\LoanApplicationCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.OperationsCommand.TransactionCommand" Collapsed="true">
+    <Position X="12.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABEQAAAAEAAAAQAAAAAAAACBAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\OperationsCommand\TransactionCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.OperatorActionsCommand.ApproveSalaryProjectApplicationCommand" Collapsed="true">
+    <Position X="12.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEBAQAAAAiAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\OperatorActionsCommand\ApproveSalaryProjectApplicationCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.SpecialistCommands.ApplyForSalaryProjectCommand">
+    <Position X="16.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAFAQAAAAAAAAAAAAAAAACAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\SpecialistCommands\ApplyForSalaryProjectCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.SpecialistCommands.DepositToEnterpriseAccountCommand" Collapsed="true">
+    <Position X="14.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAFAQAAAAAAAAAAAAAAAACAABAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\SpecialistCommands\DepositToEnterpriseAccountCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.SpecialistCommands.FinalizeSalaryProjectCommand">
+    <Position X="18.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAFAQAAAAAAAAAAAAAAAACAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\SpecialistCommands\FinalizeSalaryProjectCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.SpecialistCommands.RegisterEnterpriseCommand" Collapsed="true">
+    <Position X="14.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAFAQAAAAAAAAAAAAEAAACAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\SpecialistCommands\RegisterEnterpriseCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Commands.SpecialistCommands.TransferFundsToEmployeeCommand" Collapsed="true">
+    <Position X="16.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAFAQAAAAAAAAAAAAAAAAAAABAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\SpecialistCommands\TransferFundsToEmployeeCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="BankingSystem.BankingSystem.Core.Commands.ICommand">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>BankingSystem.Core\Commands\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

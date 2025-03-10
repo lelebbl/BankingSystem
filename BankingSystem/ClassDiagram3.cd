@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.User">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAQIAAEAAgAAAAAAAAAAACAAAAIAAAAIE=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.Administrator">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\Administrator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.Client">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEAAAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAAAAgAM=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.Manager">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAgAAAgAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.Operator">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\Operator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankingSystem.BankingSystem.Core.Entities.Users.Specialist">
+    <Position X="10" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAACAAgAAAAAFAAAAAABAAAAAAACAE=</HashCode>
+      <FileName>BankingSystem.Core\Entities\Users\Specialist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
