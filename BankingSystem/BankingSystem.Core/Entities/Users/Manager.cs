@@ -31,6 +31,9 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             Console.WriteLine("2 - Подтвердить кредиты");
             Console.WriteLine("3 - Подтвердить рассрочку");
             Console.WriteLine("4 - Отменить операции специалиста");
+            Console.WriteLine("5 - Просмотреть статистику по движениям средств");
+            Console.WriteLine("6 - Подтвердить заявку на зарплатный проект");
+            Console.WriteLine("7 - Отменить перевод средств");
             Console.WriteLine("0 - Выйти в главное меню");
         }
 
@@ -58,6 +61,18 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
                 case "4":
                     ManagerActions.ShowSpecialistCommandHistoryAndUndo(_transactionInvoker);
                     logDb.AddLog(FullName, "Отменил операцию специалиста");
+                    break;
+                case "5":
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.ShowTransactions();
+                    break;
+                case "6":
+                    OperatorActions.SelectSalaryProjectApplication(_transactionInvoker);
+                    logDb.AddLog(FullName, "Подтвердил зарплатный проект");
+                    break;
+                case "7":
+                    OperatorActions.ShowFilteredCommandHistoryAndUndo(_transactionInvoker);
+                    logDb.AddLog(FullName, "Отменил перевод средств");
                     break;
                 case "0":
                     break;

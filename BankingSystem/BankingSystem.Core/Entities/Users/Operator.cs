@@ -24,9 +24,9 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
 
         public override void PerformRoleActions()
         {
-            Console.WriteLine("1 - Просмотреть статистику");
+            Console.WriteLine("1 - Просмотреть статистику  по движениям средств");
             Console.WriteLine("2 - Подтвердить заявку на зарплатный проект");
-            Console.WriteLine("3 - Отменить перевод (можно только 1 раз)");
+            Console.WriteLine("3 - Отменить перевод средств(можно только 1 раз)");
             Console.WriteLine("0 - Выйти");
         }
 
