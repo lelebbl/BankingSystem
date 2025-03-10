@@ -18,6 +18,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         public UserRole Role { get; protected set; }
         public bool IsApproved { get; set; }   // Требует одобрения
 
+        public User() { }
+
         protected User(string fullName, string passportNumber, string idNumber, string phone, string email, string password, UserRole role)
         {
             FullName = fullName;

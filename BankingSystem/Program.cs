@@ -5,6 +5,7 @@ using BankingSystem.BankingSystem.Core.Entities.Users;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
 using BankingSystem.BankingSystem.Data;
+using System.Text.Json;
 
 class Program
 {
@@ -19,6 +20,10 @@ class Program
     static void Main()
     {
         logDb.AddLog("Система", "Запуск программы");
+
+        LoadTestData();
+        //Console.ReadKey();
+
         SelectBank();
 
         while (true)
@@ -198,4 +203,34 @@ class Program
         Console.WriteLine($"│{text.PadLeft((width + text.Length) / 2).PadRight(width - 2)}│");
         Console.WriteLine($"└{new string('─', width - 2)}┘");
     }
+
+    static void LoadTestData()
+    {
+        string filePath = "test_data.json";
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл test_data.json не найден!");
+            return;
+        }
+
+        string json = File.ReadAllText(filePath);
+        var clients = JsonSerializer.Deserialize<List<Client>>(json);
+
+        foreach (var client in clients)
+        {
+            authService.Register(
+                client.FullName,
+                client.PassportNumber,
+                client.IDNumber,
+                client.Phone,
+                client.Email,
+                client.Password,
+                UserRole.Client
+            );
+        }
+
+        Console.WriteLine("Тестовые клиенты загружены.");
+    }
+
 }

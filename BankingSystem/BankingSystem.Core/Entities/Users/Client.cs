@@ -20,6 +20,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         public List<Transaction> transactions { get; } = new List<Transaction>();
         public CommandInvoker _transactionInvoker { get; private set; }
 
+        public Client() { }
+
         public Client(string fullName, string passportNumber, string idNumber, string phone, string email, string password, CommandInvoker transactionInvoker)
             : base(fullName, passportNumber, idNumber, phone, email, password, UserRole.Client) 
         {
