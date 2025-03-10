@@ -21,7 +21,7 @@ class Program
     {
         logDb.AddLog("Система", "Запуск программы");
 
-        LoadTestData();
+        //LoadTestData();
         //Console.ReadKey();
 
         SelectBank();

@@ -46,8 +46,21 @@ namespace BankingSystem.BankingSystem.Core.Commands.OperationsCommand
 
             if (account != null)
             {
-                Console.Write("Введите сумму вклада: ");
-                _depositAmount = decimal.Parse(Console.ReadLine());
+                bool validDepositAmount = false;
+                while (!validDepositAmount)
+                {
+                    Console.Write("Введите сумму вклада: ");
+                    string depositInput = Console.ReadLine();
+
+                    if (decimal.TryParse(depositInput, out _depositAmount))
+                    {
+                        validDepositAmount = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка: Введите корректное число для суммы вклада.");
+                    }
+                }
 
                 if (account.Balance >= _depositAmount)
                 {

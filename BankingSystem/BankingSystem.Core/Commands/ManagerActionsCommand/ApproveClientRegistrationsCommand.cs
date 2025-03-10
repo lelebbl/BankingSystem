@@ -24,13 +24,53 @@ namespace BankingSystem.BankingSystem.Core.Commands.ManagerActionsCommand
             _approvedUsers = new List<User>();
         }
 
+        //public void Execute()
+        //{
+        //    var pendingUsers = _authService.GetPendingUsers();
+        //    foreach (var user in pendingUsers)
+        //    {
+        //        _authService.ApproveUser(user);
+        //        _approvedUsers.Add(user);
+        //    }
+        //}
+
         public void Execute()
         {
             var pendingUsers = _authService.GetPendingUsers();
-            foreach (var user in pendingUsers)
+            if (pendingUsers.Count == 0)
             {
-                _authService.ApproveUser(user);
-                _approvedUsers.Add(user);
+                Console.WriteLine("Нет клиентов, ожидающих одобрения.");
+                return;
+            }
+
+            Console.WriteLine("Клиенты на одобрение:");
+            for (int i = 0; i < pendingUsers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {pendingUsers[i].FullName} ({pendingUsers[i].Email})");
+            }
+
+            Console.Write("Введите номер клиента для одобрения (или 'all' для одобрения всех): ");
+            string input = Console.ReadLine();
+
+            if (input.ToLower() == "all")
+            {
+                foreach (var user in pendingUsers)
+                {
+                    _authService.ApproveUser(user);
+                    _approvedUsers.Add(user);
+                }
+                Console.WriteLine("Все клиенты одобрены!");
+            }
+            else if (int.TryParse(input, out int userIndex) && userIndex > 0 && userIndex <= pendingUsers.Count)
+            {
+                var selectedUser = pendingUsers[userIndex - 1];
+                _authService.ApproveUser(selectedUser);
+                _approvedUsers.Add(selectedUser);
+                Console.WriteLine($"Клиент {selectedUser.FullName} одобрен!");
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод.");
             }
         }
 
