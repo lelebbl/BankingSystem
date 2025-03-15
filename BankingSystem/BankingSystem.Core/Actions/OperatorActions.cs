@@ -44,7 +44,7 @@ namespace BankingSystem.BankingSystem.Core.Actions
             var history = transactionInvoker.GetCommandHistory();
 
             var filteredCommands = history
-                .Where(cmd => cmd is ApproveSalaryProjectApplicationCommand)
+                .Where(cmd => cmd is TransactionCommand)
                 .ToList();
 
             if (filteredCommands.Count == 0)
