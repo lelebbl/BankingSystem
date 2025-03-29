@@ -1,9 +1,10 @@
-﻿using BankingSystem.BankingSystem.Core.Commands;
-using BankingSystem.BankingSystem.Core.Entities;
-using BankingSystem.BankingSystem.Core.Entities.Banks;
+﻿using BankingSystem.BankingSystem.Core.Entities;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 using BankingSystem.BankingSystem.Core.Entities.Users;
 using BankingSystem.BankingSystem.Core.Enums;
 using BankingSystem.BankingSystem.Core.Services;
+using BankingSystem.BankingSystem.Core.Services.Commands;
+using BankingSystem.BankingSystem.Core.UI;
 using BankingSystem.BankingSystem.Data;
 using System.Text.Json;
 
@@ -148,6 +149,28 @@ class Program
             string password = Console.ReadLine();
 
             User newUser = authService.Register(fullName, passport, id, phone, email, password, selectedRole);
+
+            switch (selectedRole)
+            {
+                case UserRole.Client:
+                    newUser.UserUi = new ClientUi((Client)newUser);
+                    break;
+                case UserRole.Specialist:
+                    newUser.UserUi = new SpecialistUi((Specialist)newUser);
+                    break;
+                case UserRole.Manager:
+                    newUser.UserUi = new ManagerUi((Manager)newUser);
+                    break;
+                case UserRole.Administrator:
+                    newUser.UserUi = new AdministratorUi((Administrator)newUser);
+                    break;
+                case UserRole.Operator:
+                    newUser.UserUi = new OperatorUi((Operator)newUser);
+                    break;
+                default:
+                    throw new NotSupportedException($"Роль {selectedRole} не поддерживается.");
+            }
+
             logDb.AddLog(fullName, $"Зарегистрирован новый пользователь (роль: {selectedRole})");
 
             if (selectedRole == UserRole.Client)
@@ -181,7 +204,15 @@ class Program
             DisplayBankFrame($"Вы работаете с {selectedBank.Name}");
 
             Console.WriteLine("\nДоступные действия:");
-            user.PerformRoleActions();
+
+            if (user.UserUi == null)
+            {
+                Console.WriteLine("Ошибка: UserUi не инициализирован.");
+                Console.ReadKey();
+                return;
+            }
+
+            user.UserUi.PerformRoleActions();
             Console.Write("Выберите действие: ");
             string choice = Console.ReadLine();
 
@@ -191,7 +222,7 @@ class Program
                 break;
             }
 
-            user.HandleAction(choice);
+            user.UserUi.HandleAction(choice);
             Console.ReadKey();
         }
     }

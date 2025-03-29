@@ -1,5 +1,4 @@
 ﻿using BankingSystem.BankingSystem.Core.Entities.Users;
-using BankingSystem.BankingSystem.Core.Entities.Accounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

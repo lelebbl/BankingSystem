@@ -1,0 +1,67 @@
+﻿using BankingSystem.BankingSystem.Core.Entities.Operations;
+using BankingSystem.BankingSystem.Core.Services.Commands;
+using BankingSystem.BankingSystem.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BankingSystem.BankingSystem.Core.Services.Commands.AccountManagerCommand
+{
+    public class WithdrawCommand : ICommand
+    {
+        public string GetActionName()
+        {
+            return "Снятие со счета";
+        }
+
+        private List<Account> _accounts;
+        private string _accountNumber;
+        private decimal _amount;
+
+        public WithdrawCommand(List<Account> accounts, string accountNumber, decimal amount)
+        {
+            _accounts = accounts;
+            _accountNumber = accountNumber;
+            _amount = amount;
+        }
+
+        public void Execute()
+        {
+            var account = Account.FindAccount(_accounts, _accountNumber);
+            if (account != null)
+            {
+                if (account.Balance >= _amount)
+                {
+                    account.Withdraw(_amount);
+                    Console.WriteLine($"Снято {_amount}. Текущий баланс: {account.Balance}");
+
+                    TransactionDatabase transactionDb = new TransactionDatabase();
+                    transactionDb.AddTransaction("Клиент", "Снятие со счета", _amount, _accountNumber);
+                }
+                else
+                {
+                    Console.WriteLine("Недостаточно средств.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Счет не найден.");
+            }
+        }
+
+        public void Undo()
+        {
+            var account = Account.FindAccount(_accounts, _accountNumber);
+            if (account != null)
+            {
+                account.Deposit(_amount);
+                Console.WriteLine($"Отмена снятия на {_amount}. Текущий баланс: {account.Balance}");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена снятия со счета", _amount, _accountNumber);
+            }
+        }
+    }
+}

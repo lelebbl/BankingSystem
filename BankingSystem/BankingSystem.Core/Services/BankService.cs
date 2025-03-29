@@ -1,6 +1,4 @@
-﻿using BankingSystem.BankingSystem.Core.Commands;
-using BankingSystem.BankingSystem.Core.Entities.Banks;
-using BankingSystem.BankingSystem.Core.Entities.Enterprises;
+﻿using BankingSystem.BankingSystem.Core.Services.Commands;
 using BankingSystem.BankingSystem.Core.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -9,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
 
 namespace BankingSystem.BankingSystem.Core.Services
 {

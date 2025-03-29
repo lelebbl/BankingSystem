@@ -1,0 +1,77 @@
+﻿using BankingSystem.BankingSystem.Core.Entities.Users;
+using BankingSystem.BankingSystem.Core.Entities.Operations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BankingSystem.BankingSystem.Data;
+using BankingSystem.BankingSystem.Core.Services.Commands;
+
+namespace BankingSystem.BankingSystem.Core.Services.Commands.OperationsCommand
+{
+    public class InstallmentApplicationCommand : ICommand
+    {
+        public string GetActionName()
+        {
+            return "Заявка на рассрочку";
+        }
+
+        private Client _client;
+        private string _accountNumber;
+        private decimal _installmentAmount;
+        private int _installmentTerm;
+        private Installment _createdInstallment;
+        private List<Application> _applications;
+
+        public InstallmentApplicationCommand(Client client, List<Application> applications)
+        {
+            _client = client;
+            _applications = applications;
+        }
+
+        public void Execute()
+        {
+            Console.Write("Введите номер счета для зачисления рассрочки: ");
+            _accountNumber = Console.ReadLine();
+            var account = Account.FindAccount(_client.accounts, _accountNumber);
+
+            if (account != null)
+            {
+                Console.Write("Введите сумму рассрочки: ");
+                _installmentAmount = decimal.Parse(Console.ReadLine());
+                Console.Write("Введите срок (месяцы): ");
+                _installmentTerm = int.Parse(Console.ReadLine());
+                _createdInstallment = new Installment(_client, _installmentAmount, _installmentTerm, _accountNumber);
+                _applications.Add(_createdInstallment);
+                Console.WriteLine("Заявка на рассрочку отправлена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Заявка на рассрочку", _installmentAmount, _accountNumber);
+            }
+            else
+            {
+                Console.WriteLine("Счет не найден.");
+            }
+        }
+
+        public void Undo()
+        {
+            if (_createdInstallment != null)
+            {
+                var account = Account.FindAccount(_client.accounts, _accountNumber);
+                if (account != null)
+                {
+                    account.Withdraw(_installmentAmount);
+                    Console.WriteLine($"Со счета списано {_installmentAmount} руб.");
+                }
+                _applications.Remove(_createdInstallment);
+                Console.WriteLine("Заявка на рассрочку отменена.");
+
+                TransactionDatabase transactionDb = new TransactionDatabase();
+                transactionDb.AddTransaction("Клиент", "Отмена перевода средств по кредиту", _installmentAmount, _accountNumber);
+            }
+
+        }
+    }
+}

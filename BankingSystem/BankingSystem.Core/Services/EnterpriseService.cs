@@ -1,5 +1,4 @@
-﻿using BankingSystem.BankingSystem.Core.Entities.Banks;
-using BankingSystem.BankingSystem.Core.Entities.Enterprises;
+﻿using BankingSystem.BankingSystem.Core.Entities.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

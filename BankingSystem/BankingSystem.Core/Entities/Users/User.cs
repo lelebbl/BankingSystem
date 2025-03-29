@@ -1,4 +1,5 @@
 ﻿using BankingSystem.BankingSystem.Core.Enums;
+using BankingSystem.BankingSystem.Core.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
         public string Email { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; protected set; }
-        public bool IsApproved { get; set; }   // Требует одобрения
+        public bool IsApproved { get; set; }
+        public IUserUi UserUi { get; set; }
 
         public User() { }
 
@@ -31,8 +33,5 @@ namespace BankingSystem.BankingSystem.Core.Entities.Users
             Role = role;
             IsApproved = role != UserRole.Client;
         }
-
-        public abstract void PerformRoleActions();
-        public abstract void HandleAction(string choice);
     }
 }
